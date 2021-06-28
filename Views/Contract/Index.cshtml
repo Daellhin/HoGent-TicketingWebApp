@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ContractViewModel>
+
+@{
+    ViewData["Title"] = "Contracts";
+}
+
+<h1>@((bool)ViewData["OpenContracts"] ? "Open" : "Closed") Contracts</h1>
+
+@if (Model.Any() == false) {
+    <hr />
+    <p class="text-primary"> You have no @((bool)ViewData["OpenContracts"] ? "open" : "closed") contracts.</p>
+}
+else {
+    <div class="table-responsive table-striped sortable">
+        <table class="table" id="contractTable">
+            <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        @((bool)ViewData["OpenContracts"] ? "Starts" : "Started")
+                    </th>
+                    <th>
+                        @((bool)ViewData["OpenContracts"] ? "Ends" : "Ended")
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model) {
+                    <tr onclick="location.href = this.getElementsByTagName('a')[0].href">
+                        <td>
+                            @Html.DisplayFor(e => c.Nummer)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(e => c.Startdatum)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(e => c.Einddatum)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(e => c.ContractType.Naam)
+                        </td>
+                        <td>
+                            <a class="btn btn-primary d-none d-sm-inline float-right" role="button" asp-action="Details" asp-route-id="@c.Nummer">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#contractTable').DataTable({
+            columnDefs: [
+                { orderable: false, targets: 4 }
+            ]
+        });
+    });
+</script>

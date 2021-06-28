@@ -1,0 +1,177 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model TicketEditViewModel
+
+<div class="row">
+	<div class="col-lg-7">
+		<h2>Details of Ticket #@Model.Id</h2>
+	</div>
+	@if (Model.IsOpen()) {
+		<div class="col-lg-5">
+			<button type="button" class="btn btn-primary float-lg-right" data-toggle="modal" data-target="#confirmModal">
+				Cancel Ticket
+			</button>
+		</div>
+	}
+</div>
+<hr />
+
+<!-- Confirm Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<h3>Are you sure you want to cancel your ticket?</h3>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Return</button>
+				<a class="float-right btn btn-primary" role="button" asp-action="Cancel" asp-route-id="@Model.Id">Cancel Ticket</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<p>
+	Start: @Model.Datumaanmaak <br />
+	End: @(Model.Datumafgehandeld != null ? $"{@Model.Datumafgehandeld}" : "/")
+</p>
+
+<form method="post" id="form">
+	<div asp-validation-summary="All"></div>
+	<div class="row">
+		<div class="col-sm">
+			<div class="form-group">
+				<label asp-for="Contract"></label>
+				<input asp-for="Contract.DisplayName" class="form-control" disabled />
+			</div>
+			<div class="form-group">
+				<label asp-for="Titel"></label>
+				<input asp-for="Titel" class="form-control" disabled />
+			</div>
+			<div class="form-group">
+				<label asp-for="Omschrijving"></label>
+				<textarea asp-for="Omschrijving" class="form-control" disabled></textarea>
+			</div>
+			<div class="form-group">
+				<label asp-for="Dienst"></label>
+				<select asp-for="Dienst" asp-items="Html.GetEnumSelectList<Dienst>()" class="form-control" disabled>
+					@*<option value="">-- select Service --</option>*@
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Urgency"></label>
+				@if (Model.IsOpen()) {
+					<select asp-for="Urgency" asp-items="Html.GetEnumSelectList<TicketUrgency>()" class="form-control">
+						@*<option value="">-- select Urgency --</option>*@
+					</select>
+				}
+				else {
+					<select asp-for="Urgency" asp-items="Html.GetEnumSelectList<TicketUrgency>()" class="form-control" disabled></select>
+				}
+			</div>
+			<div class="form-group">
+				<label asp-for="Toegewezentechnieker"></label>
+				<input asp-for="Toegewezentechnieker.Gebruikersnaam" class="form-control" disabled />
+			</div>
+
+			@*Hidden op mobile *@
+			<div class="d-none d-sm-block">
+				@if (Model.IsOpen()) {
+					<div>
+						<button class="btn btn-primary" type="submit">Save</button>
+						<a asp-action="Index" class="btn btn-secondary">Cancel</a>
+					</div>
+				}
+				else {
+					<div>
+						<a asp-action="ClosedTickets" class="btn btn-secondary">Go Back</a>
+					</div>
+				}
+			</div>
+		</div>
+
+		<div class="col-sm">
+			<div class="form-group mb-1">
+
+				@if (Model.IsOpen()) {
+					<label asp-for="NewBijlages"></label>
+					<div id="bijlagesContainer">
+						@Html.EditorFor(model => model.NewBijlages)
+					</div>
+					<div>
+						<input class="btn btn-primary" type="button" id="btnAdd" value="New Attachment" />
+					</div>
+				}
+				else {
+					if (Enumerable.Any(Model.NewBijlages)) {
+						<label asp-for="NewBijlages"></label>
+						<div>
+							@foreach (var item in Model.NewBijlages) {
+								<a href="@item.Bijlage">@item.Bijlage</a>
+							}
+						</div>
+					}
+				}
+			</div>
+			<div class="form-group">
+				@if (Enumerable.Any(Model.Comments)) {
+					<label asp-for="Comments"></label>
+					@foreach (var item in Model.Comments) {
+						<div class="card mb-1">
+							<div class="card-body">
+								<div class="row">
+									<h5 class="card-title col-sm">@item.PersoonDieOpmerkingToevoegt</h5>
+									<h6 class="card-subtitle mb-2 text-muted col-sm text-xl-right">@item.Tijdstip</h6>
+								</div>
+								<p class="card-text">@item.Opmerking</p>
+							</div>
+						</div>
+					}
+				}
+			</div>
+
+			@if (Model.IsOpen()) {
+				<div class="form-group">
+					<label asp-for="NewComment"></label>
+					<textarea asp-for="NewComment" class="form-control"></textarea>
+				</div>
+			}
+		</div>
+	</div>
+
+	@*Enkel Visible op mobile *@
+	<div class="d-sm-none">
+		@if (Model.IsOpen()) {
+			<div>
+				<button class="btn btn-primary" type="submit">Save</button>
+				<a asp-action="Index" class="btn btn-secondary">Cancel</a>
+			</div>
+		}
+		else {
+			<div>
+				<a asp-action="ClosedTickets" class="btn btn-secondary">Go Back</a>
+			</div>
+		}
+	</div>
+
+</form>
+
+@section scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	<script type="text/javascript">
+		$("#btnAdd").on('click', function () {
+			$.ajax({
+				async: true,
+				data: $('#form').serialize(),
+				type: "POST",
+				url: '/Ticket/EditAddBijlage',
+				success: function (partialView, status) {
+					$('#bijlagesContainer').html(partialView);
+				}
+			});
+		});
+	</script>
+	<script src="~/js/textfield-resizer.js" asp-append-version="true"></script>
+	<script asp-src-include="lib/jquery-validation/dist/jquery.validate.js"></script>
+	<script asp-src-include="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}

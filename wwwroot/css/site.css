@@ -1,0 +1,275 @@
+﻿/* ---------------------------------------------------
+	Colors
+----------------------------------------------------- */
+
+/*
+  - #007bff: Light blue, accent
+  - #f1f2f4: Light gray, background
+  - #d8d9da: gray, hover
+  - #e9ecef: gray, selected
+  - #cbcccd: dark gray, selected
+*/
+
+/* ---------------------------------------------------
+	ContractType Cards
+----------------------------------------------------- */
+.card label {
+	margin-bottom: 0;
+}
+
+.hidden-radio {
+	visibility: hidden;
+	max-height: 0;
+	display: block
+}
+
+.selectable-card, .selectable-card label {
+	cursor: pointer;
+}
+
+.selectable-card {
+	min-width: 20rem;
+	margin-bottom: 1.8em
+}
+
+/**For contracts*/
+.selected-card {
+	background-color: #e9ecef;
+}
+
+	.selected-card h5 {
+		color: #007bff;
+	}
+
+.selectable-card .card-body:hover {
+	background-color: #d8d9da;
+}
+
+.home-card {
+	min-width: 15rem;
+	max-width: 15rem;
+}
+
+.card-header {
+	min-height: 4.2rem;
+	max-height: 4.2rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* ---------------------------------------------------
+	SIDEBAR STYLE
+----------------------------------------------------- */
+.overlay {
+	display: none;
+	position: fixed;
+	/* full screen */
+	width: 100vw;
+	height: 100vh;
+	/* transparent black */
+	background: rgba(0, 0, 0, 0.7);
+	/* middle layer, i.e. appears below the sidebar */
+	z-index: 998;
+	opacity: 0;
+	/* animate the transition */
+	transition: all 0.5s ease-in-out;
+}
+	/* display .overlay when it has the .active class */
+	.overlay.active {
+		display: block;
+		opacity: 1;
+	}
+
+#dismiss {
+	display: none;
+	width: 35px;
+	height: 35px;
+	position: absolute;
+	/* top right corner of the sidebar */
+	top: 10px;
+	right: 10px;
+}
+
+/**/
+
+.wrapper {
+	display: flex;
+	width: 100%;
+}
+
+#sidebar {
+	width: 250px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	z-index: 999;
+	background: rgb(243,243,243);
+	background: #f1f2f4;
+	color: #2D2D2D;
+	transition: all 0.3s;
+	display: flex;
+	flex-direction: column;
+}
+
+	#sidebar a {
+		color: black;
+		text-decoration: none;
+		font-size: 1em;
+	}
+
+	#sidebar h2 {
+		color: #007bff;
+		margin-bottom: 0.1em;
+		margin-left: 1em;
+		margin-top: 0.3em;
+		font-size: 1.1em;
+	}
+
+	#sidebar.active {
+		margin-left: -250px;
+	}
+
+	#sidebar .sidebar-header {
+		padding: 20px;
+		color: #007bff;
+	}
+
+	#sidebar ul.components {
+		padding: 20px 0;
+		border-bottom: 1px solid #47748b;
+	}
+
+	#sidebar ul li a {
+		padding: 10px;
+		display: block;
+	}
+
+		#sidebar ul li a:hover, #sidebar ul li a.active {
+			background: #cbcccd;
+		}
+
+			#sidebar ul li a:hover i, #sidebar ul li a.active i {
+				color: dodgerblue;
+			}
+
+a[data-toggle="collapse"] {
+	position: relative;
+}
+
+.dropdown-toggle::after {
+	display: block;
+	position: absolute;
+	top: 50%;
+	right: 20px;
+	transform: translateY(-50%);
+}
+
+/* ---------------------------------------------------
+	Home cards
+----------------------------------------------------- */
+
+.card-header, .card-footer {
+	background-color: #f1f2f4;
+}
+
+.table-striped tbody tr:nth-of-type(2n+1) {
+	background-color: #f1f2f4;
+}
+/* ---------------------------------------------------
+	CONTENT STYLE
+----------------------------------------------------- */
+#content {
+	width: calc(100% - 250px);
+	padding: 1em;
+	min-height: 100vh;
+	transition: all 0.3s;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+	/*Content active= Content takes full page*/
+	#content.active {
+		width: 100%;
+	}
+
+@media (max-width: 768px) {
+	#sidebar {
+		margin-left: -250px;
+	}
+
+		#sidebar.active {
+			margin-left: 0;
+		}
+
+	#content {
+		width: 100%;
+	}
+
+		#content.active {
+			width: 100%;
+		}
+
+	#sidebarCollapse span {
+		display: none;
+	}
+
+	#dismiss {
+		display: block;
+	}
+}
+
+/* ---------------------------------------------------
+	ACOUNT
+----------------------------------------------------- */
+
+#account-img {
+	width: 80px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2em;
+}
+
+/* ---------------------------------------------------
+	LOGIN
+----------------------------------------------------- */
+
+.logo-image {
+	max-width: 30rem;
+	width: 90vw;
+}
+
+/* ---------------------------------------------------
+	FIX btn-outline-primary for links (text color is not set)
+----------------------------------------------------- */
+
+.a-btn-outline-primary {
+	color: #007bff !important;
+}
+
+	.a-btn-outline-primary:hover {
+		color: white !important;
+	}
+
+/* ---------------------------------------------------
+	Tables (size, selectable rows)
+----------------------------------------------------- */
+
+.table td {
+	font-size: 0.9em;
+}
+
+.table th {
+	cursor: pointer;
+}
+
+.table tbody tr:hover {
+	background-color: #d8d9da !important;
+	cursor: pointer;
+}
+
+.table {
+	border-bottom: 1.5px solid #eaecef;
+}

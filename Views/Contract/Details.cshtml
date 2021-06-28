@@ -1,0 +1,78 @@
+﻿@model ContractViewModel;
+
+@{
+	ViewData["Title"] = "Contract Details";
+}
+<div class="row">
+	<div class="col-lg-7">
+		<h2>Details of Contract #@Model.Nummer</h2>
+	</div>
+	@if (Model.IsOpen()) {
+		<div class="col-lg-5">
+			<button type="button" class="btn btn-primary float-lg-right" data-toggle="modal" data-target="#confirmModal">
+				Close Contract
+			</button>
+		</div>
+	}
+</div>
+<hr />
+
+<!-- Confirm Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<h3>Are you sure you want to close contract #@Model.Nummer?</h3>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Keep Contract</button>
+				<a class="float-right btn btn-primary" role="button" asp-action="Cancel" asp-route-id="@Model.Nummer">Close Contract</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm">
+		<h4>Contract Details</h4>
+		<div class="form-group">
+			<label asp-for="Startdatum"></label>
+			<input asp-for="Startdatum" class="form-control" disabled />
+		</div>
+		<div class="form-group">
+			<label asp-for="Einddatum"></label>
+			<input asp-for="Einddatum" class="form-control" disabled />
+		</div>
+		<div class="form-group">
+			<label asp-for="Status"></label>
+			<input asp-for="Status" class="form-control" disabled />
+		</div>
+	</div>
+
+	<div class="col-sm">
+		<h4>Contract Type Details</h4>
+		@{ ContractTypeViewModel c = Model.ContractType;}
+		<div id="card-@c.Id" class="card">
+			<div class="card-body">
+				<h5 class="card-title">@c.Naam</h5>
+
+				<label class="text-muted">@Html.DisplayNameFor(e => c.MinimaleDoorlooptijd)</label>
+				<p>@Html.DisplayFor(e => c.MinimaleDoorlooptijd)</p>
+				<label class="text-muted">@Html.DisplayNameFor(e => c.TicketAanmaakmanieren)</label>
+				<p>
+					@foreach (var manier in c.TicketAanmaakmanieren) {
+						<span>@Html.DisplayFor(e => manier)</span>
+					}
+				</p>
+				<label class="text-muted">@Html.DisplayNameFor(e => c.TicketAanmaaktijd)</label>
+				<p>@Html.DisplayFor(e => c.TicketAanmaaktijd)</p>
+				<label class="text-muted">@Html.DisplayNameFor(e => c.TicketAfhandeltijd)</label>
+				<p>@Html.DisplayFor(e => c.TicketAfhandeltijd)</p>
+				<label class="text-muted">@Html.DisplayNameFor(e => c.Prijs)</label>
+				<p>€@Html.DisplayFor(e => c.Prijs)</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+

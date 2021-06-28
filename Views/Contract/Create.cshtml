@@ -1,0 +1,66 @@
+﻿@model ContractCreateViewModel
+@{
+	ViewData["Title"] = "Add Contract";
+}
+
+<h1>Sign a new contract</h1>
+<hr />
+
+<form method="post">
+	<div asp-validation-summary="ModelOnly" class = "alert alert-warning"></div>
+	<div class="form-group">
+		<label class="h5" asp-for="Startdatum"></label>
+		<div class="form-group">
+			<input asp-for="Startdatum" class="form-control" />
+			<span asp-validation-for="Startdatum" class="text-danger" />
+		</div>
+	</div>
+	<div></div>
+
+	<h5>Select the type of contract you want: </h5>
+
+	<div class="row">
+		@foreach (ContractTypeViewModel c in ViewBag.contractTypes) {
+			<div class="col-md-auto">
+				<div id="card-@c.Id" class="card selectable-card" onclick="select(@c.Id)">
+					<div class="card-body">
+						<h5 class="card-title">@c.Naam</h5>
+						<input id="radio-@c.Id" class="hidden-radio" type="radio" asp-for="ContractTypeId" value="@c.Id" />
+
+						<label class="text-muted">@Html.DisplayNameFor(e => c.MinimaleDoorlooptijd)</label>
+						<p>@Html.DisplayFor(e => c.MinimaleDoorlooptijd)</p>
+						<label class="text-muted">@Html.DisplayNameFor(e => c.TicketAanmaakmanieren)</label>
+						<p>
+							@foreach (var manier in c.TicketAanmaakmanieren) {
+								<span>@Html.DisplayFor(e => manier)</span>
+							}
+						</p>
+						<label class="text-muted">@Html.DisplayNameFor(e => c.TicketAanmaaktijd)</label>
+						<p>@Html.DisplayFor(e => c.TicketAanmaaktijd)</p>
+						<label class="text-muted">@Html.DisplayNameFor(e => c.TicketAfhandeltijd)</label>
+						<p>@Html.DisplayFor(e => c.TicketAfhandeltijd)</p>
+						<label class="text-muted">@Html.DisplayNameFor(e => c.Prijs)</label>
+						<p>€@Html.DisplayFor(e => c.Prijs)</p>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+
+	<p><span asp-validation-for="ContractTypeId" class="text-danger"></span></p>
+	<button class="btn btn-primary" type="submit">Sign Contract</button>
+</form>
+
+<script type="text/javascript">
+	function select(id) {
+		$("#radio-" + id).prop("checked", true);
+		$(".card").removeClass("selected-card");
+		$("#card-" + id).addClass("selected-card");
+	}
+</script>
+
+@section scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	<script asp-src-include="lib/jquery-validation/dist/jquery.validate.js"></script>
+	<script asp-src-include="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}

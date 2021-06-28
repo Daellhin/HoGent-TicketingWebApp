@@ -1,0 +1,87 @@
+﻿@model TicketCreateViewModel
+@{
+	ViewData["Title"] = "Add Ticket";
+}
+
+<h1>New Ticket</h1>
+<hr />
+
+<p>Start: @DateTime.Now</p>
+
+<form method="post" id="form">
+	<div class="row">
+		<div class="col-sm">
+			<div class="form-group">
+				<label asp-for="ContractNummer"></label>
+				<select asp-for="ContractNummer" asp-items="@(ViewData["Contracts"] as SelectList)" class="form-control">
+					<option value="">-- select Contract --</option>
+				</select>
+				<span asp-validation-for="ContractNummer" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Titel"></label>
+				<input asp-for="Titel" class="form-control" />
+				<span asp-validation-for="Titel" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Omschrijving"></label>
+				<textarea id="text" asp-for="Omschrijving" class="form-control"></textarea>
+				<span asp-validation-for="Omschrijving" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Dienst"></label>
+				<select asp-for="Dienst" asp-items="Html.GetEnumSelectList<Dienst>()" class="form-control">
+					<option value="">-- select Service --</option>
+				</select>
+				<span asp-validation-for="Dienst" class="text-danger" />
+			</div>
+			<div class="form-group">
+				<label asp-for="Urgency"></label>
+				<select asp-for="Urgency" asp-items="Html.GetEnumSelectList<TicketUrgency>()" class="form-control">
+					<option value="">-- select Urgency --</option>
+				</select>
+				<span asp-validation-for="Urgency" class="text-danger" />
+			</div>
+		</div>
+
+		<div class="col-sm">
+			<div class="form-group">
+				<label asp-for="NewBijlages"></label>
+				<div id="bijlagesContainer">
+					@Html.EditorFor(model => model.NewBijlages)
+				</div>
+			</div>
+			<div>
+				<input class="btn btn-primary" type="button" id="btnAdd" value="New Attachment" />
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<button class="btn btn-primary" type="submit">Save</button>
+		<a asp-action="Index" class="btn btn-secondary">Cancel</a>
+	</div>
+
+</form>
+
+@section scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	<script type="text/javascript">
+		$("#btnAdd").on('click', function () {
+			$.ajax({
+				async: true,
+				data: $('#form').serialize(),
+				type: "POST",
+				url: '/Ticket/CreateAddBijlage',
+				success: function (partialView, status) {
+					$('#bijlagesContainer').html(partialView);
+				}
+			});
+		});
+	</script>
+	<script src="~/js/textfield-resizer.js" asp-append-version="true"></script>
+	<script asp-src-include="lib/jquery-validation/dist/jquery.validate.js"></script>
+	<script asp-src-include="lib/jquery-validation/dist/jquery.validate.js"></script>
+	<script asp-src-include="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}
+

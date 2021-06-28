@@ -1,0 +1,32 @@
+﻿@model BijlageViewModel
+<div class="form-group" id="@Model.Id">
+	<div class="input-group mb-3">
+		<input asp-for="Bijlage" class="form-control" />
+		<input type="hidden" asp-for="Id" />
+		<div class="input-group-append">
+			<button type="button" class="btn btn-primary" onclick="remove(@Model.Id);"><i class="fas fa-minus fa-sm"></i></button>
+		</div>
+	</div>
+	<span asp-validation-for="Bijlage" class="text-danger"></span>
+
+	<script type="text/javascript">
+		function remove(id) {
+			$.ajax({
+				async: true,
+				data: $('#form').serialize(),
+				type: "POST",
+				url: '/Ticket/EditRemoveBijlage/' + id,
+				success: function (partialView, status) {
+					console.log(partialView);
+					$('#bijlagesContainer').html(partialView);
+				}
+			});
+		}
+	</script>
+</div>
+@section scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	<script asp-src-include="lib/jquery-validation/dist/jquery.validate.js"></script>
+	<script asp-src-include="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+	<script src="~/lib/jquery/dist/jquery.js"></script>
+}

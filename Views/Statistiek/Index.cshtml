@@ -1,0 +1,28 @@
+﻿@model List<ChartViewModel>
+@{
+	ViewData["Title"] = "Statistics";
+}
+
+<h1>Statistics</h1>
+<hr />
+
+@if (Model.Count() == 0) {
+	<p class="text-primary">There are no statistics to display</p>
+}
+else {
+	<script src="~/lib/jquery/dist/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+
+	@foreach (var item in Model) {
+		switch (item.ChartType) {
+			case "pie":
+				@await Html.PartialAsync("_PieChart", item);
+				break;
+			case "bar":
+				@await Html.PartialAsync("_BarChart", item);
+				break;
+			default:
+				throw new ArgumentException("Unknow chart type");
+		}
+	}
+}

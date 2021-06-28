@@ -1,0 +1,130 @@
+﻿@model HomeViewModel
+
+@{
+	ViewData["Title"] = "Home";
+}
+
+<h1>Home</h1>
+<hr />
+
+@if (Model.ContractsExpire30.Count == 0 && Model.TicketsWaitingCustomerInfo.Count == 0 && Model.TicketsRecentlyFinished.Count == 0) {
+	<p class="text-primary">You have no new updates.</p>
+}
+
+@if (Model.ContractsExpire30.Count > 0) {
+	<h5>Contracts expiring soon:</h5>
+
+	<div class="row">
+		@foreach (var contract in Model.ContractsExpire30) {
+			<div class="col-md-auto" id="Contract-@contract.Nummer">
+				<div id="card-@contract.DisplayName" class="card selectable-card home-card">
+
+					<div onclick="location.href='/Contract/Details/@contract.Nummer';">
+						<div class="card-header">
+							<h7 class="card-title">@contract.DisplayName</h7>
+						</div>
+
+						<div class="card-body">
+							<label class="text-muted">@Html.DisplayNameFor(e => contract.Einddatum)</label>
+							<p>@contract.Einddatum.Value.ToShortDateString()</p>
+
+							<label class="text-muted">@Html.DisplayNameFor(e => contract.Tickets)</label>
+							<p>@contract.Tickets.Count()</p>
+						</div>
+					</div>
+
+					<div class="card-footer text-center">
+						<p class=text-primary>Expires in @((contract.Einddatum.Value - DateTime.Today).Days) days</p>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+}
+
+@if (Model.TicketsWaitingCustomerInfo.Count > 0) {
+	<h5>Tickets waiting for your feedback:</h5>
+
+	<div class="row">
+		@foreach (var ticket in Model.TicketsWaitingCustomerInfo) {
+			<div class="col-md-auto" id="TicketACI-@ticket.Id">
+				<div id="card-@ticket.Titel" class="card selectable-card home-card">
+
+					<div onclick="location.href='/Ticket/Edit/@ticket.Id';">
+						<div class="card-header">
+							<h7 class="card-title">@ticket.Titel</h7>
+						</div>
+
+						<div class="card-body">
+							<label class="text-muted">@Html.DisplayNameFor(e => ticket.Dienst)</label>
+							<p>@Html.DisplayFor(e => ticket.Dienst)</p>
+
+							<label class="text-muted">@Html.DisplayNameFor(e => ticket.Urgency)</label>
+							<p>@Html.DisplayFor(e => ticket.Urgency)</p>
+
+						</div>
+					</div>
+
+					<div class="card-footer text-center">
+						<a class="btn btn-outline-primary btn-sm a-btn-outline-primary" role="button" onclick="removeCardTicketACI(@ticket.Id)">Remove from Home Page</a>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+}
+
+@if (Model.TicketsRecentlyFinished.Count > 0) {
+	<h5>Tickets recently finished:</h5>
+
+	<div class="row">
+		@foreach (var ticket in Model.TicketsRecentlyFinished) {
+			<div class="col-md-auto" id="TicketFinished-@ticket.Id">
+				<div id="card-@ticket.Titel" class="card selectable-card home-card">
+
+					<div onclick="location.href='/Ticket/Edit/@ticket.Id';">
+						<div class="card-header">
+							<h7 class="card-title">@ticket.Titel</h7>
+						</div>
+
+						<div class="card-body">
+
+							<label class="text-muted">@Html.DisplayNameFor(e => ticket.Dienst)</label>
+							<p>@Html.DisplayFor(e => ticket.Dienst)</p>
+
+							<label class="text-muted">@Html.DisplayNameFor(e => ticket.Urgency)</label>
+							<p>@Html.DisplayFor(e => ticket.Urgency)</p>
+						</div>
+					</div>
+
+					<div class="card-footer text-center">
+						<a class="btn btn-outline-primary btn-sm a-btn-outline-primary" role="button" onclick="removeCardTicketFinished(@ticket.Id)">Remove from Home Page</a>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+}
+
+<script>
+	function removeCardTicketACI(id) {
+		$.ajax({
+			async: true,
+			type: "POST",
+			url: `/Ticket/SetViewedByCustomer/${id}`,
+			success: function () {
+				$('#TicketACI-' + id).remove();
+			}
+		});
+	}
+	function removeCardTicketFinished(id) {
+		$.ajax({
+			async: true,
+			type: "POST",
+			url: `/Ticket/SetViewedByCustomer/${id}`,
+			success: function () {
+				$('#TicketFinished-' + id).remove();
+			}
+		});
+	}
+</script>
