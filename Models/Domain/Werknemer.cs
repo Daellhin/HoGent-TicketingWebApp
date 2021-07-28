@@ -27,5 +27,9 @@ namespace _2021_dotnet_g_04.Models.Domain {
         public Werknemer() {
             Tickets = new HashSet<Ticket>();
         }
+
+        public void AddTicket(Ticket ticket) {
+            Tickets.Add(ticket);
+        }
     }
 }

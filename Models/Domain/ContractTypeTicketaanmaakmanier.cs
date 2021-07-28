@@ -6,6 +6,10 @@ namespace _2021_dotnet_g_04.Models.Domain {
         public int ContractTypeId { get; set; }
         public TicketAanmaakManier TicketAanmaakmanier { get; set; }
 
+		public ContractTypeTicketAanmaakmanier(TicketAanmaakManier ticketAanmaakmanier) {
+            TicketAanmaakmanier = ticketAanmaakmanier;
+        }
+
         public ContractType ContractType { get; set; }
 
         public bool IsApplication() {

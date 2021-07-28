@@ -14,11 +14,10 @@ namespace _2021_dotnet_g_04.Models.Domain {
         public Comment(){
 		}
 
-        public Comment(string opmerking, string persoonDieOpmerkingToevoegt, Ticket ticket){
+        public Comment(string opmerking, string persoonDieOpmerkingToevoegt){
 			Opmerking = opmerking;
 			PersoonDieOpmerkingToevoegt = persoonDieOpmerkingToevoegt;
 			Tijdstip = DateTime.Now;
-			Ticket = ticket;
 		}
 	}
 }

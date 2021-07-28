@@ -28,6 +28,13 @@ namespace _2021_dotnet_g_04.Models.Domain {
 			Contracten = new HashSet<Contract>();
 		}
 
+		#region Contactpersoon methods
+		public void AddContactpersoon(Contactpersoon contactpersoon) {
+			Contactpersonen.Add(contactpersoon);
+		}
+
+		#endregion
+
 		#region Ticket methods
 		public void CreateTicket(String titel, TicketUrgency urgency, int nummer, Dienst dienst, String omschrijving, List<BijlageViewModel> bijlages, Werknemer toeTeWijzenTechnieker) {
 			Ticket ticket = new Ticket(titel, urgency, Contracten.Where(e => e.Nummer == nummer).Single(), dienst, omschrijving, bijlages, toeTeWijzenTechnieker);
@@ -79,14 +86,14 @@ namespace _2021_dotnet_g_04.Models.Domain {
 		public void CreateContract(DateTime startdatum, ContractType contractType) {
 			//Hier wordt er gekeken of er openstaande contracten zijn van hetzelfde type die elkaar overlappen
 			List<Contract> overlappingContracts = GetOpenContracts().Where(e => e.ContractType == contractType && startdatum.CompareTo(e.Startdatum) >= 0 && startdatum.CompareTo(e.Einddatum) <= 0).ToList();
-			if (overlappingContracts.Count()>0) {
+			if (overlappingContracts.Count() > 0) {
 				throw new ArgumentException($"You already have at least one contract of this type that overlaps: {contractType.Naam} - { overlappingContracts.First().Startdatum.ToShortDateString()}. Please select a different contract type or a different start date.");
 			}
 			Contract contract = new Contract(startdatum, contractType);
 			AddContract(contract);
 		}
 
-		private void AddContract(Contract contract) {
+		public void AddContract(Contract contract) {
 			Contracten.Add(contract);
 		}
 		#endregion

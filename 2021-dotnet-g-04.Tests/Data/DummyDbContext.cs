@@ -39,7 +39,7 @@ namespace _2021_dotnet_g_04.Tests.Data {
 			List<Comment> comments = new List<Comment> { comment1, comment1 };
 
 			//ticketaanmaakmanieren
-			List<ContractTypeTicketAanmaakmanier> ticketAanmaakmanieren = new List<ContractTypeTicketAanmaakmanier> { new ContractTypeTicketAanmaakmanier() { TicketAanmaakmanier = TicketAanmaakManier.Application } };
+			List<ContractTypeTicketAanmaakmanier> ticketAanmaakmanieren = new List<ContractTypeTicketAanmaakmanier> { new ContractTypeTicketAanmaakmanier(TicketAanmaakManier.Application) };
 
 			//Contracttypes
 			ContractType1 = new ContractType() {

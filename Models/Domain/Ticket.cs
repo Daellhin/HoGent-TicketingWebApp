@@ -75,11 +75,16 @@ namespace _2021_dotnet_g_04.Models.Domain {
 			}
 
 			Urgency = urgency;
-			if (!String.IsNullOrEmpty(newComment))
-				Comments.Add(new Comment(newComment, persoonDieOpmerkingToevoegt, this));
+			if (!string.IsNullOrEmpty(newComment)) {
+				AddComment(new Comment(newComment, persoonDieOpmerkingToevoegt));
+			}
 
 			Bijlages = newBijlages;
 			Status = TicketStatus.ReceivedCustomerInformation;
+		}
+
+		public void AddComment(Comment comment) {
+			Comments.Add(comment);
 		}
 
 		public void CancelTicket() {
@@ -98,7 +103,7 @@ namespace _2021_dotnet_g_04.Models.Domain {
 		}
 
 		public bool IsFinishedOnTime() {
-			return (Contract.ContractType.TicketAfhandeltijd - GetHandlingTime() ) >= 0;
+			return (Contract.ContractType.TicketAfhandeltijd - GetHandlingTime()) >= 0;
 		}
 	}
 }
