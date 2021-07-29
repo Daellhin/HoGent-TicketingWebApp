@@ -53,7 +53,6 @@ namespace _2021_dotnet_g_04 {
 			Console.WriteLine($"Environement: {env.EnvironmentName}");
 			if (env.IsDevelopment()) {
 				app.UseDeveloperExceptionPage();
-				app.UseDatabaseErrorPage();
 				app.UseStatusCodePages();
 				dBInitializer.Run();
 			}

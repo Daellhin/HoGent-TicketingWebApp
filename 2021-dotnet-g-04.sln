@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2021-dotnet-g-04", "2021-dotnet-g-04.csproj", "{1DF7A72A-B50B-4B3F-ADAC-4F5EDFC46A90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2021-dotnet-g-04.Tests", "2021-dotnet-g-04.Tests\2021-dotnet-g-04.Tests.csproj", "{77357757-B366-43E1-9B07-4606B761EAA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2021-dotnet-g-04.Tests", "2021-dotnet-g-04.Tests\2021-dotnet-g-04.Tests.csproj", "{77357757-B366-43E1-9B07-4606B761EAA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
