@@ -3,8 +3,6 @@ using _2021_dotnet_g_04.Models.Domain.Enumerations;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace _2021_dotnet_g_04.Data {
 	public class DBInitializer {
@@ -127,6 +125,22 @@ namespace _2021_dotnet_g_04.Data {
 			};
 			_context.Add(contractTypePremiumOneYear);
 
+			// JanDeNul: Klant
+			Klant janDeNulKlant = new Klant() {
+				Bedrijfsnaam = "Jan De Nul",
+				Busnr = "a",
+				Datumklantgeworden = DateTime.Today.AddDays(-150),
+				Gebruikersnaam = "JanDeNul",
+				Huisnummer = 44,
+				Land = "BE",
+				Postcode = "1840",
+				Status = GebruikersStatus.Active,
+				Straat = "HolStraat",
+				Wachtwoord = "Wachtwoord",
+				Woonplaats = "Vlaams-Braband"
+			};
+			_context.Add(janDeNulKlant);
+
 			// Lotus: Klant
 			Klant lotusKlant = new Klant() {
 				Bedrijfsnaam = "Lotus",
@@ -168,27 +182,26 @@ namespace _2021_dotnet_g_04.Data {
 			lotusKlant.AddContract(lotusContractPremiumOneYear);
 
 			// Lotus: Tickets
-			// Ticket 1: lotusTicketFinishedRetiredPermision
-			Ticket lotusTicketFinishedRetiredPermision = new Ticket() {
-				Status = TicketStatus.Finished,
+			// Ticket 1: lotusTicketAwaitingCustInfoRetiredPermision
+			Ticket lotusTicketAwaitingCustInfoRetiredPermision = new Ticket() {
+				Status = TicketStatus.AwaitingCustomerInformation,
 				BekekenDoorTechnieker = true,
 				BekekenDoorKlant = false,
 				DatumAanmaak = DateTime.Today.AddDays(-7),
-				DatumAfgehandeld = DateTime.Today.AddDays(-5),
 				Titel = "No permission to mark someone as retired",
 				Omschrijving = "I do not have an option to mark people as retired within the ticketingsystem app. How do I do this?",
 				Dienst = Dienst.IT,
 				Urgency = TicketUrgency.NoProductionImpact
 			};
-			lotusContractPremiumOneYear.AddTicket(lotusTicketFinishedRetiredPermision);
-			klaasTechniekerAdmin.AddTicket(lotusTicketFinishedRetiredPermision);
+			lotusContractPremiumOneYear.AddTicket(lotusTicketAwaitingCustInfoRetiredPermision);
+			klaasTechniekerAdmin.AddTicket(lotusTicketAwaitingCustInfoRetiredPermision);
 
-			Comment lotusTicketFinishedRetiredPermisionCommentTechnieker = new Comment() {
+			Comment lotusTicketAwaitingCustInfoRetiredPermisionCommentTechnieker = new Comment() {
 				Opmerking = "You have to mark them as non-active and only admins can do this action.",
 				PersoonDieOpmerkingToevoegt = "KlaasVM",
 				Tijdstip = DateTime.Now.AddDays(-6)
 			};
-			lotusTicketFinishedRetiredPermision.AddComment(lotusTicketFinishedRetiredPermisionCommentTechnieker);
+			lotusTicketAwaitingCustInfoRetiredPermision.AddComment(lotusTicketAwaitingCustInfoRetiredPermisionCommentTechnieker);
 
 			// Ticket 2: lotusTicketCreatedPrinterExcel
 			Ticket lotusTicketCreatedPrinterExcel = new Ticket() {
@@ -246,7 +259,7 @@ namespace _2021_dotnet_g_04.Data {
 			};
 			lotusTicketAwaitingCustInfoAttachements.AddComment(lotusTicketAwaitingCustInfoAttachementsCommentTechnieker);
 
-			// ticket 5: lotusTicketAwaitingCustInfoDataDeleted
+			// Ticket 5: lotusTicketAwaitingCustInfoDataDeleted
 			Ticket lotusTicketAwaitingCustInfoDataDeleted = new Ticket() {
 				Status = TicketStatus.AwaitingCustomerInformation,
 				BekekenDoorTechnieker = true,
@@ -267,6 +280,55 @@ namespace _2021_dotnet_g_04.Data {
 			};
 			lotusTicketAwaitingCustInfoDataDeleted.AddComment(lotusTicketAwaitingCustInfoDataDeletedCommentTechnieker);
 
+			// Ticket 6: lotusTicketFinishedOnTime
+			Ticket lotusTicketFinishedOnTime = new Ticket() {
+				Status = TicketStatus.Finished,
+				BekekenDoorTechnieker = true,
+				BekekenDoorKlant = true,
+				DatumAanmaak = DateTime.Today.AddDays(-100),
+				DatumAfgehandeld = DateTime.Today.AddDays(-99),
+				Titel = "Generic test ticket on time",
+				Omschrijving = "No description given",
+				Dienst = Dienst.Marketing,
+				Urgency = TicketUrgency.NoProductionImpact
+			};
+			lotusContractPremiumOneYear.AddTicket(lotusTicketFinishedOnTime);
+
+			// Ticket 7: lotusTicketFinishedNotOnTime
+			Ticket lotusTicketFinishedNotOnTime = new Ticket() {
+				Status = TicketStatus.Finished,
+				BekekenDoorTechnieker = true,
+				BekekenDoorKlant = true,
+				DatumAanmaak = DateTime.Today.AddDays(-100),
+				DatumAfgehandeld = DateTime.Today.AddDays(-80),
+				Titel = "Generic test ticket not on time",
+				Omschrijving = "No description given",
+				Dienst = Dienst.Marketing,
+				Urgency = TicketUrgency.NoProductionImpact
+			};
+			lotusContractPremiumOneYear.AddTicket(lotusTicketFinishedNotOnTime);
+
+			// Ticket 8: lotusTicketFinishedAdobeDreamweaver
+			Ticket lotusTicketFinishedAdobeDreamweaver = new Ticket() {
+				Status = TicketStatus.Finished,
+				BekekenDoorTechnieker = true,
+				BekekenDoorKlant = false,
+				DatumAanmaak = DateTime.Today.AddDays(-20),
+				DatumAfgehandeld = DateTime.Today.AddDays(-18),
+				Titel = "Error message when opening Adobe Dreamweaver CS6",
+				Omschrijving = "This is the errormessage: The help system cannot be launched because the help folder is missing. Please install the help folder or reinstall Dreamweaver. I tried reinstalling but it did not help.",
+				Dienst = Dienst.Marketing,
+				Urgency = TicketUrgency.ProductionWillBeImpacted
+			};
+			lotusContractPremiumOneYear.AddTicket(lotusTicketFinishedAdobeDreamweaver);
+			julietSupportManagerFinance.AddTicket(lotusTicketFinishedAdobeDreamweaver);
+
+			Comment lotusTicketFinishedAdobeDreamweaverCommentTechnieker = new Comment() {
+				Opmerking = "Adobe have realeased a updated that should have fixed this isue. If you encounter anny further issues you can ask them on the adobe suport forums",
+				PersoonDieOpmerkingToevoegt = "Juliet Stokes",
+				Tijdstip = DateTime.Now.AddDays(-19)
+			};
+			lotusTicketFinishedAdobeDreamweaver.AddComment(lotusTicketFinishedAdobeDreamweaverCommentTechnieker);
 		}
 
 	}

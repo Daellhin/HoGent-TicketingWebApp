@@ -7,13 +7,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace _2021_dotnet_g_04.Data {
 	public partial class ApplicationDbContext : IdentityDbContext {
-		public ApplicationDbContext() {
-		}
-
-		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-			: base(options) {
-		}
-
 		public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 		public DbSet<Klant> Klanten { get; set; }
 		public DbSet<Ticket> Ticketten { get; set; }
@@ -21,6 +14,9 @@ namespace _2021_dotnet_g_04.Data {
 		public DbSet<ContractType> ContractTypes { get; set; }
 		public DbSet<Werknemer> Werknemers { get; set; }
 		public DbSet<ContractTypeTicketAanmaakmanier> ContractTypeTicketAanmaakManieren { get; set; }
+
+		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
+		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 			base.OnModelCreating(modelBuilder);
@@ -37,5 +33,6 @@ namespace _2021_dotnet_g_04.Data {
 			modelBuilder.ApplyConfiguration(new WerknemerTelefoonnummerConfiguration());
 			modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
 		}
+
 	}
 }
