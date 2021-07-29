@@ -11,7 +11,7 @@
 	<p class="text-primary">You have no @((bool)ViewData["OpenTickets"] ? "open" : "closed") tickets.</p>
 }
 else {
-	<div class="table-responsive table-striped sortable">
+	<div class="table-responsive table-hover">
 		<table class="table" id="ticketTable">
 			<thead>
 				<tr>
@@ -51,9 +51,8 @@ else {
 	</div>
 }
 
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script type="text/javascript">
-	$(document).ready(function () {
+<script>
+	window.addEventListener('load', e => {
 		$('#ticketTable').DataTable({
 			columnDefs: [
 				{ orderable: false, targets: 3 }

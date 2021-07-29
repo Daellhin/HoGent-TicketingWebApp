@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<ContractViewModel>
-
 @{
     ViewData["Title"] = "Contracts";
 }
@@ -11,7 +10,7 @@
     <p class="text-primary"> You have no @((bool)ViewData["OpenContracts"] ? "open" : "closed") contracts.</p>
 }
 else {
-    <div class="table-responsive table-striped sortable">
+    <div class="table-responsive table-hover">
         <table class="table" id="contractTable">
             <thead>
                 <tr>
@@ -56,8 +55,7 @@ else {
     </div>
 }
 
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script type="text/javascript">
+<script>
     $(document).ready(function () {
         $('#contractTable').DataTable({
             columnDefs: [

@@ -104,8 +104,7 @@
 	left: 0;
 	height: 100vh;
 	z-index: 999;
-	background: rgb(243,243,243);
-	background: #f1f2f4;
+
 	color: #2D2D2D;
 	transition: all 0.3s;
 	display: flex;
@@ -113,13 +112,12 @@
 }
 
 	#sidebar a {
-		color: black;
+
 		text-decoration: none;
 		font-size: 1em;
 	}
 
 	#sidebar h2 {
-		color: #007bff;
 		margin-bottom: 0.1em;
 		margin-left: 1em;
 		margin-top: 0.3em;
@@ -242,18 +240,6 @@ a[data-toggle="collapse"] {
 }
 
 /* ---------------------------------------------------
-	FIX btn-outline-primary for links (text color is not set)
------------------------------------------------------ */
-
-.a-btn-outline-primary {
-	color: #007bff !important;
-}
-
-	.a-btn-outline-primary:hover {
-		color: white !important;
-	}
-
-/* ---------------------------------------------------
 	Tables (size, selectable rows)
 ----------------------------------------------------- */
 
@@ -266,7 +252,6 @@ a[data-toggle="collapse"] {
 }
 
 .table tbody tr:hover {
-	background-color: #d8d9da !important;
 	cursor: pointer;
 }
 

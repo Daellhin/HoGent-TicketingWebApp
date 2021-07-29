@@ -10,9 +10,6 @@
 	<p class="text-primary">There are no statistics to display</p>
 }
 else {
-	<script src="~/lib/jquery/dist/jquery.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-
 	@foreach (var item in Model) {
 		switch (item.ChartType) {
 			case "pie":
@@ -24,5 +21,8 @@ else {
 			default:
 				throw new ArgumentException("Unknow chart type");
 		}
+	}
+	@section scripts {
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 	}
 }

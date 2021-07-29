@@ -43,7 +43,7 @@
 	</div>
 </div>
 
-<script type="text/javascript">
+<script>
 	function setVisibility(idOn, idOff) {
 		var on = document.getElementById(idOn);
 		var off = document.getElementById(idOff);
@@ -54,7 +54,7 @@
 		}
 	}
 
-	$(function () {
+	window.addEventListener('load', e => {
 		var ctx = document.getElementById(`chart${@Model.Id}`).getContext('2d');
 
 		var chart = new  Chart(ctx, {
