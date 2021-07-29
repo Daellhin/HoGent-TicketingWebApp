@@ -8,8 +8,6 @@ http://ticketing.lorinspeybrouck.be
 | Username    | Wachtwoord | Inhoud |
 | :---------- | :--------- | :--------- |
 | LotusKoekjes| Wachtwoord | Volwaardige klant |
-| Belfius | Wachtwoord | Aangevuld met testdata |
-| B-Temium | Wachtwoord | Beperkte testdata aanwezig |
 | JanDeNul | Wachtwoord | Lege klant |
 
 ## Gerealiseerde Functionaliteiten
