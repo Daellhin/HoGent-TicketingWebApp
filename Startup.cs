@@ -14,7 +14,6 @@ using System;
 
 namespace _2021_dotnet_g_04 {
 	public class Startup {
-
 		public IConfiguration Configuration { get; }
 
 		public Startup(IConfiguration configuration) {
@@ -57,8 +56,7 @@ namespace _2021_dotnet_g_04 {
 				dBInitializer.Run();
 			}
 			else {
-				app.UseExceptionHandler("/Home/Error");
-				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+				dBInitializer.MigrateDatabase();
 				app.UseHsts();
 			}
 
@@ -76,7 +74,6 @@ namespace _2021_dotnet_g_04 {
 					pattern: "{controller=Home}/{action=Index}/{id?}");
 				endpoints.MapRazorPages();
 			});
-
 		}
 	}
 }
