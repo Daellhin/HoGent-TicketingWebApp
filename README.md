@@ -11,26 +11,26 @@ A project made for the course Projecten-workshops II at HoGent. The goal was to 
 
 ## Screenshots
 
-![Login](images/Login.png)
+![Login](Images/Login.png)
 
-![Home](images/Home.png)
+![Home](Images/Home.png)
 
-![Tickets](images/Tickets.png)
+![Tickets](Images/Tickets.png)
 
-![Ticket](images/TIcket.png)
+![Ticket](Images/Ticket.png)
 
-![Sign a contract](images/Contracts.png)
+![Sign a contract](Images/Contracts.png)
 
-![Statistics](images/Statistics.png)
+![Statistics](Images/Statistics.png)
 
 ## DCD Domain
 
-![DCD domain](images/DCD_Domain.png)
+![DCD domain](Images/DCD_Domain.png)
 
 ## DCD Controllers
 
-![DCD controllers](images/DCD_Controllers.png)
+![DCD controllers](Images/DCD_Controllers.png)
 
 ## ERD
 
-![ERD](images/ERD.png)
+![ERD](Images/ERD.png)
