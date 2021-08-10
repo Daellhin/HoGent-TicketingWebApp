@@ -116,7 +116,7 @@ namespace _2021_dotnet_g_04.Data {
 
 			ContractType contractTypePremiumOneYear = new ContractType() {
 				MinimaleDoorlooptijd = ContractDoorlooptijd.OneYear,
-				Naam = "Standard Service - 3 Year",
+				Naam = "Premium Service - 1 Year",
 				Prijs = new decimal(5000),
 				Status = ContractTypeStatus.Active,
 				TicketAanmaaktijd = TicketAanmaakTijd.AllTime,
